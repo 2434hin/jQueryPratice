@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script>
+
+	window.onload = function() {
+		document.getElementById('hh1').style.backgroundColor = 'yellow';
+	}
+</script> -->
+
+<!-- :) 스크립트는 별도로 주어야한다. -->
+<script src="../js/jquery-3.4.1.min.js"></script>
+	
+<script>
+// 	window.onload = function() {
+// 		$('#hh1').css('background', 'blue');
+// 	}
+	
+// 	jQuery(document).ready(function() {
+// 		$('#hh1').css('background', 'green').css('color', 'yellow');
+// 	})
+
+	$(function(){
+		//$('#hh1').css('background', 'red').css('color', 'white');
+		
+		$('#hh1').css({'background':'crimson', 'color':'blue'})
+	})
+</script>
+
+<style>
+	#hh1{
+		color : red;
+	}
+	pre {
+		font-size : 1.5em;
+		background:  lightblue;
+		border-top: 3px solid blue;
+		border-bottom: 3px solid blue;
+		padding: 20px;
+	}
+</style>
+</head>
+<body>
+	<pre>
+		jQuery 를 실행하기 위해서 라이브러리가 필요.
+		&lt;script src="../js/jquery-3.4.1.min.js"&gt;&lt;/script&gt;추가
+		
+		jQuery(document).ready(function() { })
+		$(function(){ })
+	</pre>
+	
+	<h1 id="hh1">무궁화 곷이 피었습니다.</h1>
+	<h1>장미 꽃도 피었습니다.</h1>
+</body>
+</html>

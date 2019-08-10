@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="../css/myStyle.css">
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function() {
+		
+		str = "Contents";
+		
+		$('#contents').click(function () {
+			
+			$('#d1').contents().each(function (i) {
+				//str += i + "번째 : " + $(this).html() + "<br>";
+				
+				// 태그 이름이 undefined일 경우 typeof로 비교
+				if(typeof this.tagName == 'undefined') {
+					// 태그 없는 자식요소중 공백요소는 걸러낸다.
+					if($(this).text().trim().length > 0)
+						str += i + "번째 : " + $(this).text() + "<br>";
+						
+				} else {
+					str += i + "번째  태그 이름 " + this.tagName + " 내용 : " +$(this).html() + "<br>";
+				}
+			})
+			
+			$('#result1').html(str);
+			
+		})
+		
+		str = "children <br>"
+		$('#children').click(function () {
+			
+			$('#d1').children().each(function (i) {
+				
+				str += i + "번째  태그 이름 " + this.tagName + " 내용 : " +$(this).html() + "<br>";
+			})
+			
+			$('#result2').html(str);
+		})
+	})
+</script>
+</head>
+<body>
+	<pre>
+		contents : 자식요소들의 내용을 가져온다, 태그가 있거나 없거나 선택 대상이된다.
+		children : 태그가 있는 자식요소들만을 대상으로 선택
+	</pre>
+	<div class="box">
+		<div id="d1">A
+			<p>p태그 안녕하세요</p>
+			<span>스판
+				<span>스판 또 스판</span>
+			</span>
+		</div>
+		
+		<br><br>
+		<button id="contents" type="button">contents</button>
+		<button id="children" type="button">children</button>
+		<br>
+		
+		<div id="result1"></div>
+		<div id="result2"></div>
+	</div>
+</body>
+</html>

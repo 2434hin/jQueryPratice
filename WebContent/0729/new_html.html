@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/myStyle.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	$(function(){
+		
+	   $('#but1').on('click', function(){
+	      //새로운 html생성
+	      
+	      vptag =   $('<p>무궁화 꽃이 피었습니다</p>');
+	      $('#result1').append(vptag);
+	      //$('#result1').css('font-size', '1.5em').css('font-weight' , 'bold').css('color', 'red');
+	      $('#result1').css({'font-size' : '2.0em',
+	                     'font-weight' : 'bold',
+	                     'color' :'red'});
+	      
+	   })
+	   
+		
+	   $('#but2').on('click', function () {
+		   
+		   imgarr = ["../images/tenor(1).gif", "../images/tenor(2).gif","../images/tenor(3).gif",
+			   		 "../images/아메리카노.jpg", "../images/단풍.jpg", "../images/tenor.gif",
+			   		"../images/핫초코.jpg", "../images/카페라떼.jpg"]
+		   
+		   // 랜덤 발생
+		   rand = Math.floor(Math.random() * imgarr.length);
+		   
+		   // img태그를 생성
+		   //imgtag = $('<img src="../images" width="150px" height = "100px" onclick="proc1()">');
+		   
+		   imgtag = $('<img>', {
+			   'src' : imgarr[rand],
+			   'width' : '150px',
+			   'height' : '100px',
+			   'title' : function () {
+				   // src속성값을 가져온다.
+				  //getsrc = this.getAttribute('src');
+				   getsrc = $(this).attr('src');
+				   
+				   start = getsrc.lastIndexOf("/");
+				   end = getsrc.lastIndexOf(".");
+				
+				   vtitle = getsrc.substring(start+1, end);
+				   
+				   return vtitle;
+				},
+			   'click' : function () {
+					$(this).css('border', '2px solid blue');
+				}
+		   })
+		   
+		   //$('#result2').append(imgtag);
+		   $(imgtag).appendTo('#result2');
+		   
+		   
+		   // :) append : 새로운 내용을 추가하라
+		   // :) appendTo : '#result2'에게 imgtag를 추가
+	   })
+	   
+	   $('#but3').on('click', function () {
+		
+		   // 방법 1
+// 		   vdiv = $('div', {});
+// 		   $('#result3').append(vdiv);
+		   
+		   // 방법 2
+		   $('<div></div>', {
+			   'text' : '클릭하세요',  // :) div와 div사이의 텍스트
+			   'click' : function () {
+				
+				   $(this).css('border', '5px solid green');
+			   }
+		   }).appendTo('#result3');
+	   })
+	   
+	})
+
+</script>
+
+</head>
+<body>
+
+   <div class = "box">
+      <h2>$('html')</h2>
+      -   새로운 html요소를 생성<br>
+      -   div result1 안에 추가<br>
+      <br><br>
+      <button id="but1" type="button">실행</button>
+
+   	  <div id = "result1"></div>
+   	  
+   </div>
+   
+   <div class = "box">
+      <h2>$('html', {properties})</h2>
+      -   img 요소를 생성<br>
+      -   속성 : src, width, height, 클릭 함수<br>
+      -   div result2 안에 추가<br>
+      <br><br>
+      <button id="but2" type="button">실행</button>
+
+   	  <div id = "result2"></div>
+   	  
+   </div>
+   
+   <div class = "box">
+      <h2>$('html', {properties})</h2>
+      -   div 요소를 생성<br>
+      -   속성 : width, height, 클릭 함수<br>
+      -   div result3 안에 추가<br>
+      <br><br>
+      <button id="but3" type="button">실행</button>
+
+   	  <div id = "result3"></div>
+   	  
+   </div>
+
+</body>
+</html>

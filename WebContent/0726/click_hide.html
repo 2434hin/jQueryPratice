@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+	$(function () {
+		
+		$('h2').on('click', function() {
+			$(this).css('display', 'none');
+			//$(this).hide();
+			if($('h2:visible').length == 0){
+				//$('button').show();
+				$('button').css('display', 'block');
+			}
+		})
+		
+		// :) button을 클릭했을 떄 자동으로 function이 실행되는것을 callBack이라고 한다. 
+		$('button').on('click', function() {
+			$('h2').show();
+			$('button').hide();
+			
+			// :) this를 사용해도 되는 이유는 onclick이 button이기 때문에
+			// $(this).hide();	
+		})
+	})
+</script>
+
+<style>
+	button {
+		display: none;
+	}
+</style>
+</head>
+<body>
+	<h2>클릭하면 사라집니다.1</h2>
+	<h2>클릭하면 사라집니다.2</h2>
+	<h2>클릭하면 사라집니다.3</h2>
+	<h2>클릭하면 사라집니다.4</h2>
+	<h2>클릭하면 사라집니다.5</h2>
+	<h2>클릭하면 사라집니다.6</h2>
+	<h2>클릭하면 사라집니다.7</h2>
+	<h2>클릭하면 사라집니다.8</h2>
+	<h2>클릭하면 사라집니다.9</h2>
+	<h2>클릭하면 사라집니다.10</h2>
+	
+	<button type="button">보이기</button>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="../css/myStyle.css">
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function() {
+		$('button#btn1').bind('click', function () {
+			
+			$('div').show(1000);	// $('div').css('dispaly', 'block');
+			$('div').animate({left: '200px'}, 1000)
+					.delay(500);
+			
+			$('div').queue(function () {
+				$(this).css('background', 'red');
+				$(this).dequeue();
+			})
+			
+			$('div').animate({left: '-=200px'}, 1000)
+					.delay(500);
+			
+			$('div').queue(function () {
+				$(this).css('background', 'green');
+				$(this).dequeue();
+			})
+			
+		})
+		
+		$('#btn2').on('click', function () {
+			
+			//setInterval(change, 1000)
+			setInterval(function () { }, 1000)
+		})
+		
+		function change() {
+			
+			$('h2').animate({left: '200px',
+							 'font-size': '+=5px'}, 1000);
+			
+			// 방법 1
+			rand = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+			
+			// 방법 2
+// 			r = Math.floor(Math.random() * 256);
+// 			b = Math.floor(Math.random() * 256);
+// 			g = Math.floor(Math.random() * 256);
+			
+// 			r = r.toString(16);
+// 			b = b.toString(16);
+// 			g = g.toString(16);
+			
+			$('h2').queue(function () {
+				$(this).css('color', rand);
+				//$(this).css('color', "#" + r + b + g);
+				$(this).dequeue();
+			})
+
+			$('h2').animate({left: '-=200px',
+				            'font-size': '-=5px'}, 1000);
+			
+			$('h2').queue(function () {
+				$(this).css('color', 'black');
+				$(this).dequeue();
+			})
+		}
+	})
+</script>
+
+<style>
+	div{
+		width: 50px;
+		height: 50px;
+		background:  green;
+		display: none;
+		position: relative;
+	}
+	h2{
+		position: relative;
+	}
+</style>
+</head>
+<body>
+	<button id="btn1" type="button">실행</button>
+	<hr>
+	<br>
+	<div></div>
+	<br>
+	<hr>
+	<pre>
+		문자열을 오른쪽으로 이동 하면서 글자 크기를 확대, 글자색을 랜덤으로 변경
+		왼쪽으로 이동하면서 글자크기를 축소, 글자색은 검정
+		1초마다 한번씩 계속 수행
+		
+		$('h2').css('background' : 'rgb(134, 235, 128)');
+		$('h2').css('background' : 'rgb(100%, 93%, 78%)');
+		$('h2').css('background' : '#f4de9a');
+		
+		16진수로 변환하는 방법
+		r = 랜덤발생 시 256을 곱한다.
+		r = r.toString(16); 
+	</pre>
+	<button id="btn2" type="button">실행</button>
+	<h2>무궁화 꽃이 피었습니다.</h2>
+</body>
+</html>

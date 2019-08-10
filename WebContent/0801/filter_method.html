@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="../css/myStyle.css">
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function() {
+		
+		$('#btn1').click(function () {
+			
+			// p요소 중에 class가 intro인거 선택
+			//$('p.intro') // :) 간편하지만 효율적이지 않다.
+			$('p').filter('.intro').css('background', 'pink');
+			
+			// class가 pp인 요소 중 jQuery를 포함하는거를 선택
+			//$('.pp:contains(jQuery)')
+			 $('.pp').filter(':contains(jQuery)').css('border', '2px solid red');
+			
+			// 홀수번째 p요소 중 HTML이 포함되어 있는거 선택
+			//$('p:odd:contains(HTML)')
+			$('p').filter(':odd').filter(':contains(HTML)').css('border', '5px double green');
+			
+			// 첫 번째 p요소를 선택
+			//$('p:first')
+			//$('p').first()
+			$('p').filter(':first').css('font-size', '1.5em');
+		})
+	})
+</script>
+</head>w
+<body>
+	<div class="box">
+		<div>
+		    <p class="pp">내이름은 jQuery입니다 </p>
+		    <p class="intro"> 나는 자바스크립트와 살고 있습니다 </p>
+		    <p class="intro"> 나는 자바스크립트를 사랑하합니다</p>
+		    <p class="pp"> 내 친구는 HTML ,Ajax입니다 </p>
+		</div>
+		
+		<br>
+		<button id="btn1" type="button">실행</button>
+	</div>
+</body>
+</html>

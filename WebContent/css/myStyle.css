@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+.box {
+   background : #CED8F6;
+   border-top : 3px solid #BCA9F5;
+   border-bottom : 3px solid #BCA9F5;
+   margin : 20px;
+   padding : 20px;
+   font-size: 1.5em; 
+}
+
+.box button {
+   color : white;
+   font-weight : bold;
+   background : #BCA9F5;
+   padding : 5px 20px;
+   border-radius : 50px;
+}
+
+.box div{
+   border : 2px dashed orange;
+   margin-right : 10px;
+   margin-top : 20px;
+   padding : 10px;
+   height : auto;
+}
+
+pre {
+   background : #F2D8DF;
+   border-top : 3px solid #071D49;
+   border-bottom : 3px solid #071D49;
+   margin : 20px;
+   padding : 10px;
+}

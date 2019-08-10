@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="../css/myStyle.css">
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function() {
+		
+		$(document).mousemove(function (e) {
+			res = "X : " + e.pageX + ", Y : " + e.pageY;
+			
+			$('div').html(res);
+			
+			// xy좌표값이 200 200이면 새로운 이미지를 추가
+			if(e.pageX == 200 && e.pageY == 200){
+				
+				 imgtag = $('<img>', {
+					   'src' : "../images/tenor(1).gif",
+					   'width' : '150px',
+					   'height' : '100px'
+				   })
+
+				 $(imgtag).appendTo('body');
+			}
+		})
+		
+	})
+</script>
+<style>
+	div{
+		height: 30px;
+		padding: 10px;
+		border : 1px solid red;
+	}
+</style>
+</head>
+<body>
+	<div></div>
+</body>
+</html>

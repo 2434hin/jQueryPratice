@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<link rel="stylesheet" href="../css/myStyle.css">
+
+<script>
+ $(function(){
+	 $('textarea').keyup(function(){
+		 
+		 vlen = $(this).val().length;
+		 len =  100-vlen;
+		 
+		 if(len <=0 ) $(this).prop('readonly',true);
+		 
+		 $('span').text(len);
+		 
+		 //100글자를 체크 - 더이상 입력 안되도록 속성 설정 
+		 
+		 
+	 })
+ })
+</script>
+</head>
+<body>
+<pre>
+  keyup 이벤트 
+  100글자 이내로 입력하고 더이상 입력 되지 않도록 설정 
+   -  prop('readonly', true);
+</pre>
+ <h2>하고 싶은 말을 남겨주세여(100글자 이내)</h2>
+ <br>
+ <textarea rows="10" cols="50"></textarea>
+ <br>
+ <p>남은글자 : <span>100</span></p>
+</body>
+</html>

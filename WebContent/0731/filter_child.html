@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="../css/myStyle.css">
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function () {
+		
+		$('li:first').css('background', 'yellow');
+		$('li:first-child').css('border', '2px solid red');
+		
+		$('#btn2').click(function () {
+			$('td:first-child').css('background', '#01A9DB');
+			$('td:nth-child(2)').css('background', '#2ECCFA');
+			$('td:last-child').css('background', '#81DAF5');
+			
+			$('tr:first-child td').css({'background': 'black',
+							   			'color' : 'white'});
+		})
+	})
+</script>
+
+<style>
+	table{
+		border-collapse:collapse;
+		border-color: white;
+	}
+	td{
+		width:500px;
+		text-align : center;
+	}
+</style>
+
+</head>
+<body>
+	<div class='box'>
+		<h2>자식필터</h2>
+		- 부모 그룹에서 각각 자식을 선택한다.<br>
+		:first-child, :last-child<br>
+		<br>
+		- 전체 중에서 하나의 요소를 선택한다.<br>
+		:first, :last<br>
+		
+		<h3>여자에게 인기있는 남자들</h3>
+		<ol>
+			<li>잘생긴 남자</li>
+			<li>능력있는 남자</li>
+			<li>돈많은 남자</li>
+			<li>프로그래머</li>
+		</ol>
+		
+		<h3>남자에게 인기있는 여자들</h3>
+		<ol>
+			<li>박은지</li>
+			<li>예쁜여자</li>
+			<li>귀여운 여자</li>
+			<li>돈많은 여자</li>
+		</ol>
+	</div>
+
+	<div class='box'>
+		<h2>자식필터</h2>
+		- 부모 그룹에서 각각 자식을 선택한다.<br>
+		:first-child, :last-child<br>
+		:nth-child(index) : 구조적 의사코드 a:link a:active a:hover a:visited<br>
+		<br>
+		
+			<table border="1">
+				<tr>
+					<td>이름</td>
+					<td>주소</td>
+					<td>전화번호</td>
+				</tr>
+				<tr>
+					<td>홍길동</td>
+					<td>대전</td>
+					<td>010-222-333</td>
+				</tr>
+				<tr>
+					<td>진달래</td>
+					<td>서울</td>
+					<td>010-444-555</td>
+				</tr>
+				<tr>
+					<td>개나리</td>
+					<td>부산</td>
+					<td>010-777-888</td>
+				</tr>
+				<tr>
+					<td>무궁화</td>
+					<td>대구</td>
+					<td>010-555-999</td>
+				</tr>
+			</table>
+		
+		<button id="btn2" type="button">실행</button>
+	</div>
+</body>
+</html>

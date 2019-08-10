@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function () {
+		$('p').css('color', 'red');
+		
+		$('p', document.forms[1]).css('font-size', '2.0em');
+		
+		$('div').on('click', function () {
+			$('p', this).css('font-size', '+=10px');
+		})
+	})
+</script>
+
+<style>
+	
+</style>
+
+</head>
+<body>
+	<form>
+		<div>
+			<p>무궁화 꽃이 피었습니다.</p>
+		</div>
+	</form>
+	
+	<form>
+		<p>장미꽃도 피었습니다.</p>
+	</form>
+	
+	<form>
+		<div id = "d1">
+			<p>졸지 말고 꽃구경 합시다.</p>
+		</div>
+	</form>
+</body>
+</html>

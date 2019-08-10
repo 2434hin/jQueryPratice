@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<link rel="stylesheet" href="../css/myStyle.css">
+
+<script>
+ $(function(){
+	 
+	 $('#btn1').click(function(){
+		 
+		// $('div:odd')
+		/* 
+		$('div').filter(':odd').eq(0).css('background', 'blue');
+		$('div').filter(':odd').eq(1).css('background', 'green');
+		$('div').filter(':odd').eq(2).css('background', 'pink'); */
+		
+		$('div').filter(':odd').eq(0).css('background', 'blue')
+		                     .end().eq(1).css('background', 'green')
+		                     .end().eq(2).css('background', 'pink');
+		
+		 
+	 })
+	 
+	 $('#btn2').click(function(){
+		 //$('.d2:eq(1)')
+		 $('.d2').eq(1).css('border', '5px solid green')
+		               .siblings().css('border', '5px solid pink')
+		               .end().next().text('세번째')
+		               .end().nextAll().css('background', 'yellow')
+		               .end().prev().css('background', 'green')
+		
+	 })
+	 
+ })
+ 
+</script>
+<style>                          
+div.di, div.d2 {
+     width:60px;
+     height:60px;  
+     margin:10px;  
+     float:left; 	
+     border:2px solid blue;
+  } 
+ .orange { background:orange; } 
+ 
+ br{
+   clear : both;
+ }
+ 
+</style>
+
+</head>
+<body>
+<pre>
+   <strong>  end()</strong>
+    -  실행을 한단계 앞으로 되돌려 기존 선택을 기준으로 새로운 필터링을 한다  <br>
+    -  홀수번째요소를 선택해서  배경색을 변경 
+</pre>
+   <br>
+	<div class="di">a</div> 
+	<div class="di">b</div> 
+	<div class="di">c</div> 
+	<div class="di">d</div> 
+	<div class="di">e</div> 
+	<div class="orange di">f</div> 
+	<div class="di">g</div>
+    <br>
+
+    <button  id="btn1" type="button">실행 </button>
+   
+ <pre>
+   <strong>  end()</strong>
+    -  첫번째 div를 기준으로 새로운 필더링을 수행한다   <br>
+    $("div").eq(1) .css()
+		앞뒤 형제 모두 파란색 테두리  - siblings()
+		다시 되올아와서 (eq(1) ) - -
+         	   바로 다음 형제 (next() )의 text변경—세번쩨third 
+		다시 되돌아와서  -- 
+         	     뒤 모든 형제(nextAll() )들 배경색 변경-노란색 
+		다시 되돌아와서 – 
+              	    앞 형제(prev() ) 배경색 변경  -  그린 
+  </pre>
+   <br>
+   <div>
+	<div class="d2">a</div> 
+	<div class="d2">b</div> 
+	<div class="d2">c</div> 
+	<div class="d2">d</div> 
+	<div class="d2">e</div> 
+	<div class="orange d2">f</div> 
+	<div class="d2">g</div>
+   </div>
+    <br>
+    <button  id="btn2" type="button">실행 </button>
+    
+    
+</body>
+</html>

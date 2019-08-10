@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="../../css/myStyle.css">
+<script src="../../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function() {
+		$.ajax({
+			url : '/jqpro/BuyerSelect',
+			type : 'get',
+			dataType : 'json',
+			success : function (datas) {
+               code = "<ol>";
+               
+               $.each(datas, function(i){
+                  code += "<li class='name'>" + datas[i].name + "</li>";
+               })
+               code += "</ol>";
+               $('#result1').html(code);
+               
+               
+               $('.name').click(function () {
+				    //$('.name').css('color' , 'initial');
+				    //$(this).css('color' , 'blue');
+				   /*  $('.name').css('background' , 'none');
+				    $(this).css('background' , '#CED8F6'); */
+				    var outerThis = this;
+				    
+				    var res = "<table border='1'>";
+				    $.each(datas, function(i, e){
+				    	if($(outerThis).text() == e.name){
+				    		res += "<tr><td>BUYER_ID</td><td>" + e.id + "</td></tr>";
+				    		res += "<tr><td>BUYER_NAME</td><td>" + e.name + "</td></tr>";
+				    		res += "<tr><td>BUYER_BANK</td><td>" + e.bank + "</td></tr>";
+				    		res += "<tr><td>BUYER_BANKNO</td><td>" + e.bankNo + "</td></tr>";
+				    		res += "<tr><td>BUYER_BANKNAME</td><td>" + e.bankName + "</td></tr>";
+				    		res += "<tr><td>BUYER_ZIP</td><td>" + e.zip + "</td></tr>";
+				    		res += "<tr><td>BUYER_ADD</td><td>" + e.add + "</td></tr>";
+				    		res += "<tr><td>BUYER_COMTEL</td><td>" + e.comtel + "</td></tr>";
+				    		res += "<tr><td>BUYER_FAX</td><td>" + e.fax + "</td></tr>";
+				    		res += "<tr><td>BUYER_MAIL</td><td>" + e.mail + "</td></tr>";
+				    		res += "<tr><td>BUYER_CHARGER</td><td>" + e.charger + "</td></tr>";
+				    		res += "<tr><td>BUYER_TELEXT</td><td>" + e.telext + "</td></tr>";
+				    	}
+				    })
+				    
+				    res += "</table>";
+				    $('#result2').html(res);
+				    
+			   })  
+			}
+		})
+		
+		
+	})
+</script>
+
+<style>
+	li{
+		list-style: none;
+		width: 110px;
+		text-align: center;
+	}
+	li:hover{
+		background: #CED8F6;
+	}
+	#result1{
+		width: 200px;
+	}
+	#result2{
+		width: 500px;
+	}
+	div{
+/* 	   border : 2px dashed orange; */
+	   margin-right : 10px;
+	   margin-top : 20px;
+	   padding : 10px;
+	   height : 350px;
+	}
+	table{
+		border-collapse:collapse;
+	}
+	td{
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<td>거 래 처 이 름</td>
+			<td>거 래 처 상 세 정 보</td>
+		</tr>
+		<tr>
+			<td><div id="result1"></div></td>
+			<td><div id="result2"></div></td>
+		</tr>
+	</table>
+
+</body>
+</html>
