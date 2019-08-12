@@ -22,7 +22,7 @@
 		"bankNo" : "<%=list.get(i).get("BUYER_BANKNO") %>",
 		"bankName" : "<%=list.get(i).get("BUYER_BANKNAME") %>",
 		"zip" : "<%=list.get(i).get("BUYER_ZIP") %>",
-		"add" : "<%=list.get(i).get("BUYER_ADD1") %> + <%=list.get(i).get("BUYER_ADD2") %>",
+		"add" : "<%=list.get(i).get("BUYER_ADD1") %> <%=list.get(i).get("BUYER_ADD2") %>",
 		"comtel" : "<%=list.get(i).get("BUYER_COMTEL") %>",
 		"fax" : "<%=list.get(i).get("BUYER_FAX") %>",
 		"mail" : "<%=list.get(i).get("BUYER_MAIL") %>",

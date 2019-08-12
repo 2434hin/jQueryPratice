@@ -6,8 +6,6 @@ import java.util.Map;
 
 import kr.or.ddit.buyer.dao.BuyerDaoImpl;
 import kr.or.ddit.buyer.dao.IBuyerDao;
-import kr.or.ddit.buyer.vo.BuyerVO;
-import kr.or.ddit.member.vo.MemberVO;
 
 public class BuyerServiceImpl implements IBuyerService {
 
