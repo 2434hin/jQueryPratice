@@ -5,21 +5,24 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="../css/myStyle.css">
-<script src="../js/jquery-3.4.1.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 <script>
 	$(function() {
 		$('button').on('click', function () {
-			
+
 // 			$.ajax({
 // 				url : 'jqpro/LprodSelect',
 // 				type : 'get',
 // 				dataType : 'json',
 // 				success : function (res) {
-					
+
 // 				},
 // 				error : function (xhr) {
-					
+
 // 				}
 // 			})
 
@@ -31,43 +34,55 @@
 					$.each(res, function (i) {
 						code += "<option value='" + res[i].gu + "'>" + res[i].nm + "</option>"
 					})
-					
+
 					$('#lprod').html(code);
+					$('#lprod').trigger('change');
 				}
 			)
-			
+
 		})
-		
+
 		$('#lprod').on('change', function () {
-			
+
 			// option의 value값을 가져온다.
 			lprodGu = $(this).val();
-			
+
 			// 서버로 전송
 			$.get(
 				'/jqpro/ProdServlet',
 				{'lprod_gu' : lprodGu},
 				function (res) {
 					code = "";
-					$.each(res, function (i) {
-						code += "<option value='" + res[i].id + "'>" + res[i].name + "</option>"
-					})
-					
+					if(res.sw == "OK"){
+						$.each(res.data, function (i, v) {
+							code += "<option value='" + v.id + "'>" + v.name + "</option>"
+						})
+					} else {
+						code += "<option value='0'>데이터 없음</option>";
+						noimg = $('<img>', {
+							'src' : '../images/noImage.png',
+							'width' : '200px',
+							'height' : '200px'
+						});
+						$('#detail').empty().append(noimg);
+					}
+
 					$('#prod').html(code);
+					$('#prod').trigger('change');
 				},
 				'json'
 			)
 		})
-		
+
 		$('#prod').on('change', function () {
 			prodId = $(this).val();
-		
+
 			// 서버로 전송
 			$.post(
 				'/jqpro/ProdServlet',
 				{"prod_id" : prodId},
 				function (res) {
-					code = "<table border='1'>";
+					code = "<table class='table table-bordered' border='1'>";
 					code += "<tr><td>항목</td><td>내용</td></tr>";
 					code += "<tr><td>PROD_ID</td><td>" + res.id + "</td></tr>";
 					code += "<tr><td>PROD_NAME</td><td>" + res.name + "</td></tr>";
@@ -79,7 +94,7 @@
 					code += "<tr><td>PROD_OUTlINE</td><td>" + res.outline + "</td></tr>";
 					code += "<tr><td>PROD_DETAIL</td><td>" + res.detail + "</td></tr>";
 					code += "</table>";
-					
+
 					$('#detail').html(code);
 				},
 				'json'
@@ -96,18 +111,61 @@
 		height: 40px;
 		text-align: center;
 	}
+	select{
+		margin-bottom: 10px;
+	}
+	button{
+		margin-top: 20px;
+		margin-left: 100px
+	}
+	#detail{
+		margin-left: 400px;
+		margin-right: 400px;
+	}
 </style>
 </head>
 <body>
-	<button type="button">실행</button>
+
+	<button type="button" class="btn btn-primary">실행</button>
 	<br><br>
-	
+
+	<div class="container">
+	    <h2>제품 리스트</h2>
+	    <form>
+		    <div class="form-group">
+		      <label for="lprod">제품 목록 리스트</label>
+		      <select class="form-control" id="lprod">
+
+		      </select>
+		      <br>
+		    </div>
+		</form>
+
+	    <form>
+		    <div class="form-group">
+		      <label for="prod">상품 리스트</label>
+		      <select class="form-control" id="prod">
+
+		      </select>
+		      <br>
+		    </div>
+		</form>
+	</div>
+
+	<br><br>
+	<div id="detail"></div>
+
+	<!-- <button type="button">실행</button>
+	<br><br>
+	<h1>제품 리스트</h1>
 	<table border="1">
 		<tr>
 			<td>
+				<h3>제품 분류리스트</h3>
 				<select name="lprod" id="lprod"></select>
 			</td>
 			<td>
+				<h3>상품 리스트</h3>
 				<select name="prod" id="prod"></select>
 			</td>
 		</tr>
@@ -115,7 +173,7 @@
 			<td colspan="2">
 				<div id="detail"></div>
 			</td>
-		</tr>	
-	</table>
+		</tr>
+	</table> -->
 </body>
 </html>

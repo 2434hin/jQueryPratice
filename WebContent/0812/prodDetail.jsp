@@ -4,8 +4,9 @@
 
     <%
 		ProdVO vo = (ProdVO) request.getAttribute("vo");
+    	if(vo != null){
 	%>
-	
+
 	{
 		"id" : "<%=vo.getProd_id() %>",
 		"name" : "<%=vo.getProd_name() %>",
@@ -17,3 +18,5 @@
 		"outline" : "<%=vo.getProd_outline() %>",
 		"detail" : "<%=vo.getProd_detail() %>"
 	}
+
+	<%}%>

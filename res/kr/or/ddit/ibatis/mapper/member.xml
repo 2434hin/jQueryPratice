@@ -9,4 +9,21 @@
       select * from member
    </select>
 
+	<select id="getSelectedId" parameterClass="String" resultClass="String">
+		select mem_id from member
+		where mem_id = #data#
+	</select>
+
+	<select id="getSelectedDong" parameterClass="String" resultClass="zipVO">
+		select * from ziptb where dong like '%'||#data# ||'%'
+	</select>
+
+	<insert id="insertMember" parameterClass="memVO">
+		insert into member(mem_id, mem_pass, mem_name, mem_bir, mem_zip, mem_add1, mem_add2, mem_hp, mem_mail)
+		values(#mem_id#, #mem_pass#, #mem_name#, #mem_bir#, #mem_zip#, #mem_add1#, #mem_add2#, #mem_hp#, #mem_mail#)
+
+		<selectKey keyProperty="mem_id" resultClass="String">
+			select mem_id from member where mem_id = #mem_id#
+		</selectKey>
+	</insert>
 </sqlMap>
