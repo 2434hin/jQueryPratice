@@ -47,7 +47,7 @@ public class MemberDaoImpl implements IMemberDao {
 
 	@Override
 	public String insertMember(MemberVO vo) throws SQLException {
-		return (String) client.queryForObject("member.insertMember", vo);
+		return (String) client.insert("member.insertMember", vo);
 	}
 
 }

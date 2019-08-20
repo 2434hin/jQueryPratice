@@ -5,11 +5,142 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="../css/myStyle.css">
-<script src="../js/jquery-3.4.1.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script src="../js/regcheck.js"></script>
 
 <script>
 	$(function() {
 
+ 		// id 중복검사
+		$('#btnid').on('click', function () {
+			// 입력한 id값을 가져온다.
+			//idval = $('#id').val();
+
+			if(idtest()){
+				//공백검증, 길이검증, 정규화검증 통과
+				$.ajax({
+					url : '/jqpro/MemberIdCheck',
+					type : 'get',
+					data : { "id" : idval },
+					dataType : 'json',
+					success : function (datas) {
+						$('#idchk').html(datas.res).css('color', 'red');
+					},
+					error : function (xhr) {
+						alert("상태 : " + xhr.status);
+					}
+				})
+
+			}	// if
+
+		})
+
+		//번호검색
+		$('#searchDong').on('click', function(){
+		   //입력한 동을 가져온다
+		   dongvalue = $('#dong').val();
+
+		   if(dongtest()){
+			   $.ajax({
+			      url :'/jqpro/DongSelect',
+			      type : 'post',
+			      data : "dong=" + dongvalue,  //{"dong" : dongvalue}
+			      dataType : 'json',
+			      success : function(datas){
+			         code = "<table class='table table-bordered' border='1'>";
+			         code += "<tr><td>우편번호</td><td>주소</td><td>번지</td></tr>";
+			         $.each(datas, function(i,v){
+			            code += "<tr class='ziptr'>";
+			            code += "<td>" + v.zipcode + "</td>";
+			            code += "<td>" + v.addr + "</td>";
+			            code += "<td>" + v.bunji + "</td>";
+			            code += "</tr>";
+			         })
+			         code += "</table>";
+			         $('#result').html(code);
+			      },
+			      error : function(xhr){
+			         alert("상태 : " + xhr.status);
+			      }
+			   })
+		   } // if
+
+		})
+
+   		// 동 검색 결과에서  클릭했을 떄 - delegate 방식
+		$('#result').on('click','.ziptr', function () {
+			zipcode = $('td:eq(0)', this).text();
+			addr = $('td:eq(1)', this).text();
+
+			// form에 선택한 행의 값(우편번호와 주소)을 출력
+			$('#zip').val(zipcode);
+			$('#add1').val(addr);
+
+			// 모달창 닫기
+			$('#myModal').modal('hide');
+		})
+
+		// 모달창 닫기 이벤트 - 모달창 닫을 때 모달창의 내용 지우기
+		$('#myModal').on('hide.bs.modal', function () {
+			$('#result').empty();
+			$('#dong').val("");
+		})
+
+		// 제출버튼 클릭 - 전송, 저장
+      $('#btnjoin').on('click', function(){
+/*          //입력한 모든 값을 가져온다.
+         idval = $('#id').val();
+         nameval = $('#name').val();
+         birval = $('#birth').val();
+         telval = $('#ptel').val();
+         mailval = $('#mail').val();
+         pwval = $('#pwd').val();
+         zipval = $('#zip').val();
+         add1val = $('#add1').val();
+         add2val = $('#add2').val();
+
+            //dataval = "id=" + idval + "&name=" + nameval + "&bir=" + birval +....
+
+         dataval = {
+               "id" : idval,
+               "name" : nameval,
+               "bir" : birval,
+               "tel" : telval,
+               "mail" : mailval,
+               "pwd" : pwval,
+               "zip" : zipval,
+               "add1" : add1val,
+               "add2" : add2val
+
+         } */
+
+            //dataval = $('#ff').serialize();
+
+            if(!regtest()) return;
+
+            dataval = $('#ff').serializeArray();
+            console.log(dataval);
+
+            $.ajax({
+                url : '/jqpro/InsertMember',
+                type : 'post',
+                data : dataval,
+                dataType : 'json',
+                success : function (res) {
+
+                   $('#joinres').html(res.res).css('color', 'red');
+                },
+                error : function (xhr) {
+                   alert("상태 : " + xhr.status);
+                }
+             })
+
+		})
 	})
 </script>
 <style type="text/css">
@@ -18,7 +149,7 @@
 		display: inline-block;
 	}
 	fieldset{
-		width : 500px;
+		width : 600px;
 		height : auto;
 		border: 5px solid gray;
 	}
@@ -42,30 +173,64 @@
 		margin-left : 20px;
 		border-radius: 20px;
 	}
+	.ziptr:hover{
+		background: lime;
+	}
+	#add1, #add2{
+		width: 300px;
+	}
 </style>
 
 </head>
 <body>
 	<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;화원가입</h2>
 	<fieldset>
-		<form name="ff">
-			<label>아이디:</label><input type="text" id="id" name = "id">
-								<button type="button">중복검사</button><br><hr>
-			<label>이름:</label><input type="text" id="name" name="name"><br><hr>
-			<label>생년월일:</label><input type="text" id="bir" name="bir" required placeholder="1999.04.15"><br><hr>
-			<label>비밀번호:</label><input type="password" id="passwd" name="passwd"><br><hr>
-			<label>휴대폰 번호:</label><input type="tel" id="phone" name="phone" placeholder="010-1234-5678"><br><hr>
-			<label>이메일</label><input type="email" id="email" name="email" placeholder="abcd123@email.com"><br><hr>
-			<label>우편번호:</label><input type="text" id="zip" name="zip">
-								<button type="button">번호검색</button><br><hr>
-			<label>주소:</label><input type="text" id="addr" name="addr"><br><hr>
-			<label>상세주소:</label><input type="text" id="addrDt" name="addrDt"><br><hr>
+		<form name="ff" id="ff">
+			<label>아이디:</label><input type="text" id="id" name="mem_id">
+								<button type="button" id="btnid">중복검사</button>
+								<span id="idchk"></span><br><hr>
+			<label>이름:</label><input type="text" id="name" name="mem_name"><br><hr>
+			<label>생년월일:</label><input type="text" id="birth" name="mem_bir" required placeholder="1999.04.15"><br><hr>
+			<label>비밀번호:</label><input type="password" id="pwd" name="mem_pass"><br><hr>
+			<label>휴대폰 번호:</label><input type="tel" id="ptel" name="mem_hp" placeholder="010-1234-5678"><br><hr>
+			<label>이메일</label><input type="email" id="mail" name="mem_mail" placeholder="abcd123@email.com"><br><hr>
+			<label>우편번호:</label><input type="text" id="zip" name="mem_zip">
+								<button type="button" id="zipBtn" data-toggle="modal" data-target="#myModal">번호검색</button><br><hr>
+			<label>주소:</label><input type="text" id="add1" name="mem_add1"><br><hr>
+			<label>상세주소:</label><input type="text" id="add2" name="mem_add2"><br><hr>
 		</form>
 	</fieldset>
 
 	<br>
-	<button class="b" type="button">제출</button>
+	<button class="b" type="button" id="btnjoin">제출</button>
 	<button class="b" type="reset">초기화</button>
+	<span id="joinres"></span>
+
+	<br><br>
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">우편번호 찾기</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>찾고자 하는 동을 입력하세요.</p>
+	        <input type="text" id="dong">
+	        <button type="button" id="searchDong">검색</button>
+	        <br>
+	        <div id="result"></div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
 
 </body>
 </html>
