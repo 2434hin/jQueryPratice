@@ -90,8 +90,8 @@ var regtest = function() {
 	}
 
 	// 길이검증 4-15
-	if(pwdval.trim().length < 4 || pwdval.trim().length > 15){
-		alert("4~15 사이 입니다.");
+	if(pwdval.trim().length < 8 || pwdval.trim().length > 12){
+		alert("8~12 사이 입니다.");
 		$('#pwd').focus();
 		return false;
 	}
@@ -100,12 +100,13 @@ var regtest = function() {
 	// 0번이상 나오는 문다 뒤에 a-z를 기준으로 전방에 아무것도 없다. 그래서 a-z로 시작
 	// 0번이상 나오는 문다 뒤에 A-Z를 기준으로 전방에 아무것도 없다. 그래서 A-Z로 시작
 	// 0번이상 나오는 문다 뒤에 0-9를 기준으로 전방에 아무것도 없다. 그래서 0-9로 시작
-	   regpass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[0-9])(?=.*[!@#$%^&*()+_-]).{8,12}$/;
-	   if(!(regpass.test(passval))){
-	      alert("비밀번호 형식오류입니다.");
-	  $('#pwd').focus();
-	      return false;
-	   }
+	   //regpass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()+_-]).{8,12}$/;
+	regpass = /^(?=.*\d)(?=.*[~`!@#$%\^&*()-+=])(?=.*[a-zA-Z]).{8,12}$/;
+	if(!(regpass.test(pwdval))){
+		alert("비밀번호 형식오류입니다.");
+		$('#pwd').focus();
+		return false;
+	}
 
 	/*   // 정규식
 	   aa = "http://www.naver.com";
@@ -121,5 +122,21 @@ var regtest = function() {
 	   }
 	*/
 
-	   return true;
+	/////////////////////////////////////////////////////////////////////
+
+	telval = $('#ptel').val();
+	if(telval.trim().length == 0 ){
+		alert("전화번호 입력하세요");
+		$('#ptel').focus();
+		return false;
+	}
+
+	regtel = /\d{3}-\d{4}-\d{4}/;
+	if(!(regtel.test(telval))){
+		alert("전화번호 형식오류입니다.");
+		$('#ptel').focus();
+		return false;
+	}
+
+	return true;
 }
