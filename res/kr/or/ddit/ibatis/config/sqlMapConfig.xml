@@ -28,6 +28,7 @@
       <typeAlias alias="memVO" type="kr.or.ddit.member.vo.MemberVO"/>
       <typeAlias alias="lprodVO" type="kr.or.ddit.lprod.vo.LprodVO"/>
       <typeAlias alias="zipVO" type="kr.or.ddit.member.vo.ZipVO"/>
+      <typeAlias alias="boardVO" type="kr.or.ddit.board.vo.BoardVO"/>
 
     <!-- DB에 연결을 설정하는 부분 (위에서 읽어온 properties파일 정보를 이용하여 설정한다.) -->
     <transactionManager type="JDBC">

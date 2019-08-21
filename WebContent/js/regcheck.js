@@ -14,7 +14,7 @@ var idtest = function(){
 
 	// 길이검증
 	if(idval.trim().length < 4 || idval.trim().length > 12){
-		alert("4~12 사이 입니다.");
+		alert("아이디는 4~12 사이 입니다.");
 		return false;
 	}
 
@@ -60,14 +60,14 @@ var regtest = function() {
 		if(rkor.test(nameval)){
 			// 길이검증 2-5
 			if(nameval.trim().length < 2 || nameval.trim().length > 5){
-				alert("2~5 사이 입니다.");
+				alert("한글이름은 2~5 사이 입니다.");
 				$('#name').focus();
 				return false;
 			}
 		} else if(reng.test(nameval)) {
 			// 영문일 경우 5-10
 			if(nameval.trim().length < 5 || nameval.trim().length > 10){
-				alert("5~10 사이 입니다.");
+				alert("영문이름은 5~10 사이 입니다.");
 				$('#name').focus();
 				return false;
 			}
@@ -91,7 +91,7 @@ var regtest = function() {
 
 	// 길이검증 4-15
 	if(pwdval.trim().length < 8 || pwdval.trim().length > 12){
-		alert("8~12 사이 입니다.");
+		alert("비밀번호는 8~12 사이 입니다.");
 		$('#pwd').focus();
 		return false;
 	}
@@ -124,6 +124,7 @@ var regtest = function() {
 
 	/////////////////////////////////////////////////////////////////////
 
+	// 전화번호
 	telval = $('#ptel').val();
 	if(telval.trim().length == 0 ){
 		alert("전화번호 입력하세요");
@@ -135,6 +136,24 @@ var regtest = function() {
 	if(!(regtel.test(telval))){
 		alert("전화번호 형식오류입니다.");
 		$('#ptel').focus();
+		return false;
+	}
+
+	/////////////////////////////////////////////////////////////////////
+
+	// 이메일
+	mailval = $('#mail').val();
+	if(mailval.trim().length == 0 ){
+		alert("이메일을 입력하세요");
+		$('#mail').focus();
+		return false;
+	}
+
+	//regmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+){1,2}$/
+	regmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+	if(!(regmail.test(mailval))){
+		alert("이메일 형식오류입니다.");
+		$('#mail').focus();
 		return false;
 	}
 
