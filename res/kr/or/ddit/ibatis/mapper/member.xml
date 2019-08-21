@@ -26,10 +26,23 @@
     <selectKey keyProperty="mem_id">
        select mem_id from member where mem_id = #mem_id#
     </selectKey>
-
-
 </insert>
 
+<select id="getSido" resultClass="zipVO">
+   select distinct sido from ziptb
+</select>
 
+<select id="getGugun" parameterClass="String" resultClass="zipVO">
+   select distinct gugun from ziptb where sido = #sido#
+</select>
+
+<select id="getDong" parameterClass="hashmap" resultClass="zipVO">
+   select distinct SUBSTR(dong,1,INSTR(dong,' ','1','1')) as dong
+    from ziptb where sido =  #sido# and gugun = #gugun#
+</select>
+
+<select id="getZip" parameterClass="hashmap" resultClass="zipVO">
+   select distinct * from ziptb where sido = #sido# and gugun = #gugun# and dong like #dong#||'%'
+</select>
 
 </sqlMap>

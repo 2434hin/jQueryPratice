@@ -6,10 +6,10 @@
 
 <link rel="stylesheet" href="../css/myStyle.css">
 
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 <script src="../js/regcheck.js"></script>
 
@@ -41,20 +41,97 @@
 		})
 
 		//번호검색
-		$('#searchDong').on('click', function(){
-		   //입력한 동을 가져온다
-		   dongvalue = $('#dong').val();
+		$('#zipBtn').on('click', function(){
 
-		   if(dongtest()){
-			   $.ajax({
-			      url :'/jqpro/DongSelect',
-			      type : 'post',
-			      data : "dong=" + dongvalue,  //{"dong" : dongvalue}
-			      dataType : 'json',
-			      success : function(datas){
-			         code = "<table class='table table-bordered' border='1'>";
+ 			$.ajax({
+				url : '/jqpro/ZipSelect',
+				type : 'get',
+				dataType : 'json',
+				success : function (res) {
+					code = "";
+					$.each(res, function (i) {
+						code += "<option value='" + res[i].sido + "'>" + res[i].sido + "</option>"
+					})
+
+					$('#sido').html(code);
+					$('#sido').trigger('change');
+				},
+				error : function (xhr) {
+					alert("상태 : " + xhr.status);
+				}
+			})
+
+		})
+
+		$('#sido').on('change', function () {
+
+			// option의 value값을 가져온다.
+			sido = $(this).val();
+
+			// 서버로 전송
+			$.get(
+				'/jqpro/ZipDetailSelect',
+				{'sido' : sido},
+				function (res) {
+					code = "";
+					if(res.sw == "OK"){
+						$.each(res.data, function (i, v) {
+							code += "<option value='" + v.gugun + "'>" + v.gugun + "</option>"
+						})
+					} else {
+						code += "<option value='0'>데이터 없음</option>";
+					}
+
+					$('#gugun').html(code);
+ 					$('#gugun').trigger('change');
+				},
+				'json'
+			)
+		})
+
+		$('#gugun').on('change', function () {
+
+			// option의 value값을 가져온다.
+			sido = $('#sido').val();
+			gugun = $(this).val();
+
+			// 서버로 전송
+			$.post(
+				'/jqpro/ZipDetailSelect',
+				{'sido' : sido,
+				 'gugun' : gugun},
+				function (res) {
+					code = "";
+					if(res.sw == "OK"){
+						$.each(res.data, function (i, v) {
+							code += "<option value='" + v.dong + "'>" + v.dong + "</option>"
+						})
+					} else {
+						code += "<option value='0'>데이터 없음</option>";
+					}
+
+					$('#dong').html(code);
+ 					$('#dong').trigger('change');
+				},
+				'json'
+			)
+		})
+
+		$('#dong').on('change', function () {
+			sido = $('#sido').val();
+			gugun = $('#gugun').val();
+			dong = $(this).val();
+
+			$.post(
+				'/jqpro/ZipSelect',
+				{'sido' : sido,
+				 'gugun' : gugun,
+				 'dong' : dong},
+				function (res) {
+
+					 code = "<table class='table table-bordered' border='1'>";
 			         code += "<tr><td>우편번호</td><td>주소</td><td>번지</td></tr>";
-			         $.each(datas, function(i,v){
+			         $.each(res, function(i,v){
 			            code += "<tr class='ziptr'>";
 			            code += "<td>" + v.zipcode + "</td>";
 			            code += "<td>" + v.addr + "</td>";
@@ -63,12 +140,9 @@
 			         })
 			         code += "</table>";
 			         $('#result').html(code);
-			      },
-			      error : function(xhr){
-			         alert("상태 : " + xhr.status);
-			      }
-			   })
-		   } // if
+				},
+				'json'
+			)
 
 		})
 
@@ -179,6 +253,14 @@
 	#add1, #add2{
 		width: 300px;
 	}
+	#sido, #gugun{
+		width: 100px;
+		margin: 15px;
+	}
+	#dong{
+		width: 250px;
+		margin: 15px;
+	}
 </style>
 
 </head>
@@ -218,9 +300,10 @@
 	        <h4 class="modal-title">우편번호 찾기</h4>
 	      </div>
 	      <div class="modal-body">
-	        <p>찾고자 하는 동을 입력하세요.</p>
-	        <input type="text" id="dong">
-	        <button type="button" id="searchDong">검색</button>
+	        <p>찾고자 하는 주소를 선택하세요.</p>
+	        <select id="sido"></select>
+	        <select id="gugun"></select>
+	        <select id="dong"></select>
 	        <br>
 	        <div id="result"></div>
 	      </div>

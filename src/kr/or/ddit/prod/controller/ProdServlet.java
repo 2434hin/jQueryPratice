@@ -18,11 +18,6 @@ import kr.or.ddit.prod.vo.ProdVO;
 public class ProdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ProdServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// option에 들어갈 prod의 id와 name가져오기

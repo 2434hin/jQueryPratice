@@ -2,6 +2,7 @@ package kr.or.ddit.member.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.member.dao.IMemberDao;
 import kr.or.ddit.member.dao.MemberDaoImpl;
@@ -48,15 +49,15 @@ public class MemberServiceImpl implements IMemberService{
 
 	@Override
 	public String getSelectedId(String id) {
-		
+
 		String res = null;
-		
+
 		try {
 			res = dao.getSelectedId(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return res;
 	}
 
@@ -76,14 +77,71 @@ public class MemberServiceImpl implements IMemberService{
 	@Override
 	public String insertMember(MemberVO vo) {
 		String res = null;
-		
+
 		try {
 			res = dao.insertMember(vo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return res;
+	}
+
+	// 시도 출력
+	@Override
+	public List<ZipVO> getSido() {
+
+		List<ZipVO> list = null;
+
+		try {
+			list = dao.getSido();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	// 구군 출력
+	@Override
+	public List<ZipVO> getGugun(String sido) {
+		List<ZipVO> list = null;
+
+		try {
+			list = dao.getGugun(sido);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	// 동 출력
+	@Override
+	public List<ZipVO> getDong(Map<String, String> map) {
+		List<ZipVO> list = null;
+
+		try {
+			list = dao.getDong(map);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	// 주소 출력
+	@Override
+	public List<ZipVO> getZip(Map<String, String> map) {
+		List<ZipVO> list = null;
+
+		try {
+			list = dao.getZip(map);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 }
