@@ -40,7 +40,65 @@
 
 		})
 
-		//번호검색
+		// 번호검색
+		$('#searchDong').on('click', function(){
+
+			// 상세주소 값 비워주기
+			$('#add2').val("");
+
+			//입력한 동을 가져온다
+			   dongvalue = $('#dongSearch').val();
+
+			   if(dongtest()){
+				   $.ajax({
+				      url :'/jqpro/DongSelect',
+				      type : 'post',
+				      data : "dong=" + dongvalue,  //{"dong" : dongvalue}
+				      dataType : 'json',
+				      success : function(datas){
+				         code = "<table class='table table-bordered' border='1'>";
+				         code += "<tr><td>우편번호</td><td>주소</td><td>번지</td></tr>";
+				         $.each(datas, function(i,v){
+				            code += "<tr class='ziptr'>";
+				            code += "<td>" + v.zipcode + "</td>";
+				            code += "<td>" + v.addr + "</td>";
+				            code += "<td>" + v.bunji + "</td>";
+				            code += "</tr>";
+				         })
+				         code += "</table>";
+				         $('#result1').html(code);
+				      },
+				      error : function(xhr){
+				         alert("상태 : " + xhr.status);
+				      }
+				   })
+			   } // if
+		})
+
+		// 동 검색 결과에서  클릭했을 떄 - delegate 방식
+		$('#result1').on('click','.ziptr', function () {
+
+			// 상세주소 값 비워주기
+			$('#add2').val("");
+
+			zipcode = $('td:eq(0)', this).text();
+			addr = $('td:eq(1)', this).text();
+
+			// form에 선택한 행의 값(우편번호와 주소)을 출력
+			$('#zip').val(zipcode);
+			$('#add1').val(addr);
+
+			// 모달창 닫기
+			$('#modal').modal('hide');
+		})
+
+		// 모달창 닫기 이벤트 - 모달창 닫을 때 모달창의 내용 지우기
+		$('#modal').on('hide.bs.modal', function () {
+			$('#result1').empty();
+			$('#dongSearch').val("");
+		})
+
+		// 우편번호검색
 		$('#zipBtn').on('click', function(){
 
  			$.ajax({
@@ -50,7 +108,7 @@
 				success : function (res) {
 					code = "";
 					$.each(res, function (i) {
-						code += "<option value='" + res[i].sido + "'>" + res[i].sido + "</option>"
+						code += "<option value='" + res[i].sido + "'>" + res[i].sido + "</option>";
 					})
 
 					$('#sido').html(code);
@@ -148,6 +206,10 @@
 
    		// 동 검색 결과에서  클릭했을 떄 - delegate 방식
 		$('#result').on('click','.ziptr', function () {
+
+			// 상세주소 값 비워주기
+			$('#add2').val("");
+
 			zipcode = $('td:eq(0)', this).text();
 			addr = $('td:eq(1)', this).text();
 
@@ -277,7 +339,8 @@
 			<label>휴대폰 번호:</label><input type="tel" id="ptel" name="mem_hp" placeholder="010-1234-5678"><br><hr>
 			<label>이메일</label><input type="email" id="mail" name="mem_mail" placeholder="abcd123@email.com"><br><hr>
 			<label>우편번호:</label><input type="text" id="zip" name="mem_zip">
-								<button type="button" id="zipBtn" data-toggle="modal" data-target="#myModal">번호검색</button><br><hr>
+								<button type="button" id="zipBtn1" data-toggle="modal" data-target="#modal">번호검색</button>
+								<button type="button" id="zipBtn" data-toggle="modal" data-target="#myModal">우편번호검색</button><br><hr>
 			<label>주소:</label><input type="text" id="add1" name="mem_add1"><br><hr>
 			<label>상세주소:</label><input type="text" id="add2" name="mem_add2"><br><hr>
 		</form>
@@ -289,7 +352,32 @@
 	<span id="joinres"></span>
 
 	<br><br>
-	<!-- Modal -->
+	<!-- Modal 동 검색 -->
+	<div id="modal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">우편번호 찾기</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>찾고자 하는 동을 입력하세요.</p>
+	        <input type="text" id="dongSearch">
+	        <button type="button" id="searchDong">검색</button>
+	        <br>
+	        <div id="result1"></div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<!-- Modal1 -->
 	<div id="myModal" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
 

@@ -8,4 +8,6 @@ import kr.or.ddit.board.vo.BoardVO;
 public interface IBoardDao {
 
 	public List<BoardVO> selectAll() throws SQLException;
+
+	public int insertBoard(BoardVO vo) throws SQLException;
 }

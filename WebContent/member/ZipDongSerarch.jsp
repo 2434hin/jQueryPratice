@@ -12,11 +12,11 @@
     			"sw" : "OK",
     			"data" : [
 	    			<%
-						for(int i = 1; i < list.size(); i++){
+						for(int i = 0; i < list.size(); i++){
 
 							ZipVO vo = list.get(i);
 
-							if(i > 1)
+							if(i > 0)
 								out.print(",");
 	    			%>
 	    					{

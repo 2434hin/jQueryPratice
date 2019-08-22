@@ -37,8 +37,11 @@
 </select>
 
 <select id="getDong" parameterClass="hashmap" resultClass="zipVO">
-   select distinct SUBSTR(dong,1,INSTR(dong,' ','1','1')) as dong
-    from ziptb where sido =  #sido# and gugun = #gugun#
+   select distinct dong
+   from (select  SUBSTR(dong,1,INSTR(dong,' ','1','1')) as dong
+            from ziptb
+            where sido =  #sido# and gugun = #gugun#)
+    where dong is not null
 </select>
 
 <select id="getZip" parameterClass="hashmap" resultClass="zipVO">

@@ -5,4 +5,16 @@
 
 <sqlMap namespace="board">
 
+	<select id="selectAll" resultClass="boardVO">
+		select * from board order by 1 desc
+	</select>
+
+	<insert id="insertBoard" parameterClass="boardVO">
+			insert into board values(board_seq.nextval, #subject#, #writer#, #mail#, #password#, #content#, 0, #wip#, sysdate)
+
+<!-- 		selectKey는 중복된 값을 가져오면 안된다. -->
+		<selectKey keyProperty="seq" resultClass="int">
+			select board_seq.currval from dual
+		</selectKey>
+	</insert>
 </sqlMap>
