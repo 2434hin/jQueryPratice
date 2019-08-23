@@ -23,7 +23,6 @@ public class ZipDetailSelect extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String sido = request.getParameter("sido");
-		System.out.println(sido);
 
 		IMemberService service = MemberServiceImpl.getInstance();
 

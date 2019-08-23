@@ -11,17 +11,50 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
   <script src="../js/board.js"></script>
+
+  <link rel="stylesheet" href="../css/font.css">
+  <link rel="stylesheet" href="../css/board.css">
+
 <title>Insert title here</title>
 <script>
-	$(function () {
-		readServer();
+reply = {};
+   $(function(){
+      readServer();
 
-		$('#w_submit').on('click', function () {
+      $('#w_submit').on('click', function(){
 
-			writeServer();
+         writeServer();
 
-		})
-	})
+      })
+
+      $('.modal').on('hide.bs.modal', function(){
+            $('.text', this).val("");
+      })
+
+      //버튼의 class = action (board.js) -> 수정, 삭제, 댓글 등록, 댓글 삭제, 댓글 수정
+      //delegate 방식
+      $('#accordionList').on('click', '.action', function(){
+         bname = $(this).attr('name');
+         bidx = $(this).attr('idx');
+
+         if(bname == "delete"){
+            deleteServer(bidx);
+         }else if(bname=="modify"){
+
+         }else if(bname == "reply"){
+            //댓글등록. 입력한 내용을 가져온다
+            text = $(this).parent().find('.area').val();
+            name = "korea";
+            reply.name = name;
+            reply.cont = text;
+            reply.bonum = bidx;
+
+            replySaveServer();
+            //replyListServer(bidx, this);
+         }
+
+      })
+   })
 </script>
 </head>
 <body>

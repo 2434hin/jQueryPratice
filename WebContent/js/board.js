@@ -1,6 +1,70 @@
 /**
  *
  */
+var replyListServer = function(seq, but) {
+
+	$.ajax({
+		url : '/jqpro/ReplyList',
+		data : {'seq' : seq},
+		type : 'get',	// get은 생략가능
+		dataType : 'json',
+		success : function(datas) {
+			code = "";
+			$.each(datas, function(i, v) {
+					code += '   <div class="panel-body">';
+					code += '      <p style="width: 80%; float: left;">';
+					code += '	     	<span>';
+					code += '	     	 ' + v.name + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' ;
+					code += '	    	 ' + v.redate + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+					code += '           </span><br><br>';
+					code += '	     	<span class="cont">' + v.cont+ '</span>';
+					code += '      </p>';
+
+					code += '      <p style="float: right;">';
+					code += '      		<button idx="' + v.renum + '" type="button" name="r_modify" class="action">댓글 수정</button>';
+					code += '      		<button idx="' + v.renum + '" type="button" name="r_delete" class="action">댓글 삭제</button>';
+					code += '      </p>';
+					code += '   </div>';
+			})
+		},
+		error : function (xhr) {
+			alert("상태 : " + xhr.status);
+		}
+	})
+}
+
+var replySaveServer = function(but) {
+	$.ajax({
+		url : '/jqpro/ReplySave',
+		type : 'post',
+		data : reply,	// reply객체
+		dataType : 'json',
+		success : function(datas) {
+
+			alert(datas.res);
+		},
+		error : function (xhr) {
+			alert("상태 : " + xhr.status);
+		}
+	})
+}
+
+var deleteServer = function(bidx) {
+
+	$.ajax({
+		url : '/jqpro/BoardDelete',
+		type : 'get',
+		data : {"seq" : bidx},
+		dataType : 'json',
+		success : function(datas){
+			alert(datas.sw);
+		},
+		error : function (xhr) {
+			alert("상태 : " + xhr.status);
+		}
+	})
+}
+
 var writeServer = function () {
 	$.ajax({
 		url : '/jqpro/BoardWrite',
@@ -33,7 +97,7 @@ var readServer = function(){
 					code += '        </h4>                                                                                                                     '                  ;
 					code += '      </div>                                                                                                                      '                  ;
 					code += '      <div id="collapse' + v.seq + '" class="panel-collapse collapse">                                                                     '      ;
-					code += '        <div class="panel-body">                                                                                                  '                  ;
+					code += '        <div class="panel-body pbody">                                                                                                  '                  ;
 					code += '        	<p style="width: 80%; float: left;">                                                                                   '                  ;
 					code += '	     	        작성자 :' + v.writer + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                                         '  ;
 					code += '	    	        이메일 :' + v.mail + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                                                                         '    ;

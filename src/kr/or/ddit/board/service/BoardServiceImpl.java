@@ -6,6 +6,7 @@ import java.util.List;
 import kr.or.ddit.board.dao.BoardDaoImpl;
 import kr.or.ddit.board.dao.IBoardDao;
 import kr.or.ddit.board.vo.BoardVO;
+import kr.or.ddit.board.vo.ReplyVO;
 
 public class BoardServiceImpl implements IBoardService {
 
@@ -50,6 +51,45 @@ public class BoardServiceImpl implements IBoardService {
 		}
 
 		return seq;
+	}
+
+	@Override
+	public int deleteBoard(int seq) {
+		int seq1 = 0;
+
+		try {
+			seq1 = dao.deleteBoard(seq);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return seq1;
+	}
+
+	@Override
+	public int insertReply(ReplyVO vo) {
+		int seq = 0;
+
+		try {
+			seq = dao.insertReply(vo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return seq;
+	}
+
+	@Override
+	public List<ReplyVO> listReply(int seq) {
+		List<ReplyVO> list = null;
+
+		try {
+			list = dao.listReply(seq);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 }
