@@ -31,8 +31,8 @@ reply = {};
             $('.text', this).val("");
       })
 
-      //버튼의 class = action (board.js) -> 수정, 삭제, 댓글 등록, 댓글 삭제, 댓글 수정
-      //delegate 방식
+      // 버튼의 class = action (board.js) -> 수정, 삭제, 댓글 등록, 댓글 삭제, 댓글 수정
+      // delegate 방식
       $('#accordionList').on('click', '.action', function(){
          bname = $(this).attr('name');
          bidx = $(this).attr('idx');
@@ -41,7 +41,7 @@ reply = {};
             deleteServer(bidx);
          }else if(bname=="modify"){
 
-         }else if(bname == "reply"){
+         }else if(bname == "reply"){   // 댓글 등록 버튼 클릭
             //댓글등록. 입력한 내용을 가져온다
             text = $(this).parent().find('.area').val();
             name = "korea";
@@ -49,15 +49,72 @@ reply = {};
             reply.cont = text;
             reply.bonum = bidx;
 
-            replySaveServer();
-            //replyListServer(bidx, this);
-         }
+            replySaveServer();   // 비동기처리를 동기처리로 변환
+            replyListServer(bidx, this);
+         }else if(bname == "list"){
+            replyListServer(bidx, this);
+         }else if(bname == "r_delete"){
+            replyDeleteServer(bidx, this);
+         }else if(bname == "r_modify"){
 
+
+            if($('#modifyForm').css('display') != "none"){
+               //댓글수정 클릭할 때 이미 다른곳에서 댓글 수정을 완료하지 않은상태로
+               //modifyForm이 현재 열려있는 상태를 닫으려고 한다.
+               replyReset();
+            }
+
+
+            rnum = bidx;
+            modifycont = $(this).parents('.rep').find('.cont').html().replace(/<br>/g, "\n");
+            $('#modifyForm>#test').val(modifycont);
+            $(this).parents(".rep").find(".cont").empty().append($('#modifyForm'))
+            $('#modifyForm').show();
+
+            //replyModifyServer(bidx,this);
+         }
       })
+
+      function replyReset(){
+
+    	  spanTag = $('#modifyForm').parent();
+
+    	  $('body').append($('#modifyForm'));
+
+    	  $('#modifyForm').hide();
+
+    	  spanTag.html(modifycont.replace(/\n/g, "<br>"));
+      }
+
+      $('#btnreset').on('click', function () {
+    	  replyReset();
+	  })
+
+	  $('#btnok').on('click', function () {
+		  // modifyForm의 자식(>) test
+		  modifyCont = $('#modifyForm>#test').val();
+		  spanTag = $('#modifyForm').parent();
+
+		  reply.renum = rnum;
+		  reply.cont = modifyCont;
+		  replyUpdateServer();
+
+		  $('body').append($('#modifyForm'));
+		  $('#modifyForm').hide();
+
+		  spanTag.html(modifyCont.replace(/\n/g, "<br>"));
+	  })
+
    })
 </script>
 </head>
 <body>
+	<div id="modifyForm" style="display: none">
+		<textarea id="test" rows="5" cols="50"></textarea>
+		<input type="button" value="확인" id="btnok">
+		<input type="button" value="취소" id="btnreset">
+	</div>
+
 	<div id="ss"></div>
 
 	<h2>◡̈혜인◡̈  Accordion 게시판</h2>

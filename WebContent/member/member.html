@@ -96,6 +96,7 @@
 		$('#modal').on('hide.bs.modal', function () {
 			$('#result1').empty();
 			$('#dongSearch').val("");
+			$('.modal-backdrop').remove();
 		})
 
 		// 우편번호검색
@@ -225,6 +226,7 @@
 		$('#myModal').on('hide.bs.modal', function () {
 			$('#result').empty();
 			$('#dong').val("");
+			$('.modal-backdrop').remove();
 		})
 
 		// 제출버튼 클릭 - 전송, 저장
@@ -276,6 +278,10 @@
                 }
              })
 
+		})
+
+		$('#zipbtn').on('click', function () {
+			$('#myModal').modal('show');
 		})
 	})
 </script>

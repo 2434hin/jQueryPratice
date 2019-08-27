@@ -2,6 +2,7 @@ package kr.or.ddit.board.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.board.dao.BoardDaoImpl;
 import kr.or.ddit.board.dao.IBoardDao;
@@ -90,6 +91,34 @@ public class BoardServiceImpl implements IBoardService {
 		}
 
 		return list;
+	}
+
+	// 댓글 삭제
+	@Override
+	public int deleteReply(int renum) {
+		int seq = 0;
+
+		try {
+			seq = dao.deleteReply(renum);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return seq;
+	}
+
+	// 댓글 수정
+	@Override
+	public int modifyReply(Map<String, Object> map) {
+		int seq = 0;
+
+		try {
+			seq = dao.modifyReply(map);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return seq;
 	}
 
 }

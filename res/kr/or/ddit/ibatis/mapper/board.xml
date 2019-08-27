@@ -33,4 +33,12 @@
 	<select id="listReply" parameterClass="int" resultClass="replyVO">
 		select * from reply where bonum = #data#
 	</select>
+
+	<delete id="deleteReply" parameterClass="int">
+		delete from reply where renum = #data#
+	</delete>
+
+	<update id="modifyReply" parameterClass="map">
+		update reply set cont = #cont# where renum = #renum#
+	</update>
 </sqlMap>
